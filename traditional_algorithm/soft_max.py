@@ -5,6 +5,9 @@ import logistic_regression as lr
 
 
 def zero_one_loss(label, output):
+    """
+    #0,1损失差不多的东西,正确返回1, 错误返回0
+    """
     if label == output:
         return 1
     else:
@@ -12,13 +15,55 @@ def zero_one_loss(label, output):
 
 
 def h_theta(theta, new_x):
+    """
+    # theta为kx(n+1), k是种类数量, n是x的维度, x是mx(n+1)向量
+    # z 是 k乘以m的向量, 没一列是每一个例子的和
+    # 要按照列求和
+    """
     z = np.dot(theta, new_x.T)
     z_list = lr.sigmoid(z)
-    print z_list
-    z_sum = np.sum(z_list)
-    print(z_sum)
-    return z_list / z_sum
+    #print z_list
+    z_sum = np.sum(z_list, axis=0)
+    #print(z_sum)
+    for i in range(z_list.shape[0]):
+        z_list[:, i] = z_list[:, i] / z_sum[i]
+    #print(z_list)
+    return z_list
 
+
+def p(i, j, mat_p):
+    return mat_p[j][i]
+
+
+def sgd_one_step(theta, new_x, label, alpha):
+    """
+    #根据公式来进行梯度下降的求解
+    #这里y的值必须是从0开始的整数,例如 0,1,2,3
+    """
+    n = new_x.shape[1] - 1
+    m = new_x.shape[0]
+    k = theta.shape[0]
+    for j in range(k):
+        temp_sum = np.zeros((1, n + 1))
+        mat_p = h_theta(theta, new_x)
+        for index_x in range(m):
+            temp_sum += new_x[index_x, :] * (zero_one_loss(label[index_x], j) - p(index_x, j, mat_p))
+            print("----" + str(temp_sum))
+        #print(theta[j, :].shape)
+        #print((alpha * temp_sum).shape)
+        theta[j, :] = theta[j, :] + alpha * temp_sum
+        pass
+    print("--------------theta---------------")
+    print(theta)
+    return theta
+
+
+def sgd(theta, new_x, label, alpha, step_num=1000):
+    """
+    #批量梯度下降
+    """
+    for step in range(step_num):
+        theta = sgd_one_step(theta, new_x, label, alpha)
 
 """m=3 n=5"""
 temp_x = np.array([
@@ -26,15 +71,35 @@ temp_x = np.array([
     [2, 1, 8, 1, 2],
     [-6, -6, -7, -8, -9]])
 
-temp_theta = np.array([[-1, 2, -2, 1, 2, 1],
+temp_theta = np.array([[-1.0, 2, -2, 1, 2, 1],
                        [1, 2, 3, 4, 5, 6],
                        [1, 2, -2, 5, 2, 11]])
 
 """m=3"""
-temp_y = np.array([1, 1, 0])
+temp_y = np.array([1, 2, 1])
 
 
 def get_loss():
+    """
+    #返回损失函数的大小
+    """
+    pass
+
+
+def predict(test_new_x, theta):
+    result = h_theta(theta, test_new_x) #返回k乘以m向量  我们要得到  1乘以m向量
+    out_put = np.zeros( theta.shape[0])
+    for i in range(result.shape[1]):
+        temp = result[:, i]
+        max_index = 0
+        max_num = -1.0
+        for j in range(len(temp)):
+            if temp[j] > max_num:
+                max_num = temp[j]
+                max_index = j
+        out_put[i] = max_index
+    print(out_put)
+    return out_put
     pass
 
 
@@ -44,5 +109,14 @@ if __name__ == "__main__":
 
     h = h_theta(temp_theta, new_x)
     print(h)
+
+    sgd_one_step(temp_theta, new_x, temp_y, 1)
+    sgd_one_step(temp_theta, new_x, temp_y, 1)
+    sgd_one_step(temp_theta, new_x, temp_y, 1)
+    sgd_one_step(temp_theta, new_x, temp_y, 1)
+    sgd_one_step(temp_theta, new_x, temp_y, 1)
+    t = sgd_one_step(temp_theta, new_x, temp_y, 0.1)
+
+    predict(new_x, t)
 
     pass

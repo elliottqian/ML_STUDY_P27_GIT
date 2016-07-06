@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import pandas as pd
 import os
 
 
@@ -15,6 +14,13 @@ def h_theta(new_x, theta):
 
 
 def error(x, y, theta):
+    """
+    #计算损失函数
+    :param x:
+    :param y:
+    :param theta:
+    :return:
+    """
     print(np.log(h_theta(x, theta)))
     temp_ones = np.ones((1, x.shape[0]))
     print(temp_ones)
