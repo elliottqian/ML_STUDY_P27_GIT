@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     S = np.diag(s)
     #S[2][2] = 0
-    S[3][3] = 0
+    #S[3][3] = 0
     S[4][4] = 0
     print(S)
     print np.dot(U, np.dot(S, V))

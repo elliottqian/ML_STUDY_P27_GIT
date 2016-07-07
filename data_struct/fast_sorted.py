@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import theano as T
-import numpy as np
+
+class FastSort(object):
+
+    pass
 
 
 if __name__ == "__main__":
     pass
+

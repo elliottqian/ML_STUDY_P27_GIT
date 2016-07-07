@@ -2,7 +2,7 @@
 
 
 """
-an implementation of the dict tree
+an implementation of the dictionary tree
 for chinese
 """
 
@@ -44,13 +44,13 @@ class DictionaryTree(object):
 
     def create_dict_tree(self):
         for word in self.dictionary:
-            """
-            #循环从字典里面取词
-            #每次从根节点插入新词,所以有 temp_root = self.root
-            """
+
+            # 循环从字典里面取词
+            # 每次从根节点插入新词,所以有 temp_root = self.root-
             temp_root = self.root
-            #插入字典代码
-            for i in range(len(word)): #对每一个单词来循环
+
+            # 插入字典代码
+            for i in range(len(word)):  # 对每一个单词来循环
                 """先检查temp的子节点有没有这个字,没有就加入新的节点,"""
                 exist = self.is_son_exist_char(word[i], temp_root)
                 """移动temp节点,直到叶子节点"""
