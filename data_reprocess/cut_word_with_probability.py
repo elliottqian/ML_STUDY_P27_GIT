@@ -42,6 +42,9 @@ def make_word_set(sentence_list):
     return word_dict
 
 
+path = u"C:\\Users\\hzqianwei\\Desktop\\tlbb.txt"
+
+
 def cut_word_test(word_dict, xx):
     pass
 

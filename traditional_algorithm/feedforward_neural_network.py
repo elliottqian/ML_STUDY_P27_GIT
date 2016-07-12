@@ -7,7 +7,8 @@ l_1, l_2, l3
 """
 
 import numpy as np
-import logistic_regression as lr
+
+from machine_learning_algorithm import logistic_regression as lr
 
 
 class Layer(object):

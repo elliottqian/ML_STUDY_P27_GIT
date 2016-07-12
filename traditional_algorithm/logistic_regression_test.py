@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
-import logistic_regression as lr
 import numpy as np
+
+from machine_learning_algorithm import logistic_regression as lr
 
 
 def change_label(x):

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import logistic_regression as lr
+
+from machine_learning_algorithm import logistic_regression as lr
 
 
 def zero_one_loss(label, output):
@@ -65,18 +66,7 @@ def sgd(theta, new_x, label, alpha, step_num=1000):
     for step in range(step_num):
         theta = sgd_one_step(theta, new_x, label, alpha)
 
-"""m=3 n=5"""
-temp_x = np.array([
-    [0, 1, 2, 1, 2],
-    [2, 1, 8, 1, 2],
-    [-6, -6, -7, -8, -9]])
 
-temp_theta = np.array([[-1.0, 2, -2, 1, 2, 1],
-                       [1, 2, 3, 4, 5, 6],
-                       [1, 2, -2, 5, 2, 11]])
-
-"""m=3"""
-temp_y = np.array([1, 2, 1])
 
 
 def get_loss():
@@ -103,20 +93,89 @@ def predict(test_new_x, theta):
     pass
 
 
+class SoftMax(object):
+
+    def __init__(self, X, y, out_n):
+        self.X = X
+        self.y = y
+        self.m = len(X)
+        self.in_n = X.shape[1]
+        self.out_n = out_n
+        self.W = np.random.random((self.in_n, out_n))
+        self.b = np.random.random((1, out_n))
+
+    def get_loss(self):
+        z = self.X.dot(self.W) + self.b
+        prob = np.exp(-z)
+        print(prob)
+        sum_ax_1 = np.sum(prob, axis=1)
+        print(sum_ax_1)
+        for index in range(self.m):
+            prob[index] = prob[index] / sum_ax_1[index]
+        print(prob)
+        loss = np.zeros((self.m, 1))
+        for index in range(self.m):
+            label = self.y[index]
+            loss[index] = prob[index][label]
+        print(loss)
+        loss = - np.sum(np.log(loss))
+        print(loss)
+        pass
+
+    def sgd(self):
+        grand = 0
+
+
+    def get_output(self):
+        z = self.X.dot(self.W) + self.b
+        prob = np.exp(-z)
+        print(prob)
+        predict = np.argmax(prob, axis=1)
+        print(predict)
+        return predict
+
+    def zero_one_loss(self, label, output):
+        """
+        # 0,1损失差不多的东西,正确返回1, 错误返回0
+        """
+        if label == output:
+            return 1
+        else:
+            return 0
+
+"""m=3 n=5"""
+temp_x = np.array([
+    [0, 1, 2, 1, 2],
+    [2, 1, 8, 1, 2],
+    [-6, -6, -7, -8, -9]])
+
+temp_theta = np.array([[-1.0, 2, -2, 1, 2, 1],
+                       [1, 2, 3, 4, 5, 6],
+                       [1, 2, -2, 5, 2, 11]])
+
+"""m=3"""
+temp_y = np.array([0, 0, 3])
+
 if __name__ == "__main__":
-    new_x = lr.get_new_x(temp_x)
-    print(new_x)
 
-    h = h_theta(temp_theta, new_x)
-    print(h)
+    soft_max = SoftMax(temp_x, temp_y, 4)
+    print(soft_max.W)
+    soft_max.get_output()
+    soft_max.get_loss()
 
-    sgd_one_step(temp_theta, new_x, temp_y, 1)
-    sgd_one_step(temp_theta, new_x, temp_y, 1)
-    sgd_one_step(temp_theta, new_x, temp_y, 1)
-    sgd_one_step(temp_theta, new_x, temp_y, 1)
-    sgd_one_step(temp_theta, new_x, temp_y, 1)
-    t = sgd_one_step(temp_theta, new_x, temp_y, 0.1)
-
-    predict(new_x, t)
+    # new_x = lr.get_new_x(temp_x)
+    # print(new_x)
+    #
+    # h = h_theta(temp_theta, new_x)
+    # print(h)
+    #
+    # sgd_one_step(temp_theta, new_x, temp_y, 1)
+    # sgd_one_step(temp_theta, new_x, temp_y, 1)
+    # sgd_one_step(temp_theta, new_x, temp_y, 1)
+    # sgd_one_step(temp_theta, new_x, temp_y, 1)
+    # sgd_one_step(temp_theta, new_x, temp_y, 1)
+    # t = sgd_one_step(temp_theta, new_x, temp_y, 0.1)
+    #
+    # predict(new_x, t)
 
     pass
