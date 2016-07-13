@@ -410,7 +410,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
         epoch, 1. * epoch / (end_time - start_time)))
     print(('The code for file ' +
            os.path.split(__file__)[1] +
-           ' ran for %.1fs' % ((end_time - start_time))), file=sys.stderr )
+           ' ran for %.1fs'  % ((end_time - start_time))), sys.stderr)
 
 
 def predict():
