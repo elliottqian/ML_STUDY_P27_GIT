@@ -12,7 +12,10 @@ class WordList(object):
 
     def __init__(self):
 
-        self.word_list = []
+        # self.word_list = []
+        self.word_dict = {}
+
+    def reset(self):
         self.word_dict = {}
 
     def cut(self, path_name):
@@ -24,14 +27,14 @@ class WordList(object):
             sentence = line.strip()
             # 先去掉首位空格, 然后吧迭代器转换成list
             word_itr = list(jieba.cut(sentence))
-            self.word_list.extend(word_itr)
+            # self.word_list.extend(word_itr)
             for word in word_itr:
                 if word in self.word_dict.keys():
                     self.word_dict[word] += 1
                 else:
                     self.word_dict[word] = 1
         file.close()
-        return self.word_list, self.word_dict
+        return self.word_dict
 
     def statistics(self):
         sorted_list = sorted(self.word_dict.items(), key=lambda item: item[1], reverse=True)
