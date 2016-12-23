@@ -1,2 +1,4 @@
-jieba_cut:切词,作图
-sentence2vector: 文本到向量
+jieba_cut:                  切词,作图
+sentence2vector:            文本到向量,这个对应词的位置是按照频率排序的
+a_simple_sentence2vec:      一种最简单的方法获得句子的向量表示
+cut_word_with_probability:  按照概率分词
