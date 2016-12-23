@@ -3,7 +3,7 @@
 """
 使用字典树进行正向最大匹配分词
 """
-import dict_tree
+import data_struct.dict_tree
 
 
 class CutWord(object):
