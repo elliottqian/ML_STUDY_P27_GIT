@@ -1,4 +1,5 @@
-# -*- coding:utf-8 -*-
+#!/home/elliottqian/d/ubuntu/anaconda3/bin/python3.5
+# -*- coding:utf-8 -*-s
 
 
 import numpy as np
